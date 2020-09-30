@@ -167,6 +167,11 @@ class CdProduct extends ShopProduct
         $base .= ": page count - $this->playLength";
         return $base;
     }
+
+    public function __toString(): string
+    {
+        return __CLASS__;
+    }
 }
 
 
@@ -198,9 +203,9 @@ class BookProduct extends ShopProduct
     }
 }
 
-$dsn = "sqlite:/".__DIR__."/products.db";
-$pdo = new \PDO($dsn, null, null);
-$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-$obj = ShopProduct::getInstance(1, $pdo);
-
-print ShopProduct::AVAILABLE;
+//$dsn = "sqlite:/".__DIR__."/products.db";
+//$pdo = new \PDO($dsn, null, null);
+//$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+//$obj = ShopProduct::getInstance(1, $pdo);
+//
+//print ShopProduct::AVAILABLE;

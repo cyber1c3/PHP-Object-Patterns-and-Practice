@@ -30,6 +30,6 @@ class Person
     }
 }
 
-$person = new Person("Bob", 44);
-$person->setId(343);
-unset($person);
+//$person = new Person("Bob", 44);
+//$person->setId(343);
+//unset($person);
