@@ -44,3 +44,11 @@ if (is_callable(array($product, $method))) {
 if (method_exists($product, $method)) {
     print $product->$method().PHP_EOL;
 }
+
+print_r(get_class_vars("chapter04\code2\CdProduct"));
+
+print get_parent_class("chapter04\code2\CdProduct");
+
+if (is_subclass_of($product, "chapter04\code2\ShopProduct")) {
+    print get_class($product)." is a subclass of ShopProduct".PHP_EOL;
+}
