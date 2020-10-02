@@ -150,6 +150,10 @@ class CdProduct extends ShopProduct
 {
     private $playLength;
 
+    protected $test;
+
+    public $coverUrl = "cover url";
+
     public function __construct(string $title, string $firstName, string $mainName, string $price, string $playLength)
     {
         parent::__construct($title, $firstName, $mainName, $price);
