@@ -1,0 +1,11 @@
+<object>
+    <class name="\chapter09\code07\TerrainFactory">
+        <arg num="0" inst="\chapter09\code07\EarthSea" />
+        <arg num="1" inst="\chapter09\code07\MarsPlains" />
+        <arg num="2" inst="\chapter09\code07\EarthForest" />
+    </class>
+
+    <class>
+
+    </class>
+</object>
