@@ -1,6 +1,6 @@
 <?php
 
-namespace chapter05\code05;
+namespace chapter11\code05;
 
 
 abstract class Unit
@@ -16,6 +16,11 @@ abstract class Unit
         }
         $method = "visit".$refthis->getShortName();
         $visitor->$method($this);
+    }
+
+    public function isNull()
+    {
+        return false;
     }
 }
 
@@ -182,13 +187,78 @@ class TaxCollectionVisitor extends ArmyVisitor
     }
 }
 
-$main_army = new Army();
-$main_army->addUnit(new Archer());
-$main_army->addUnit(new LaserCannonUnit());
-$main_army->addUnit(new Cavalry());
 
-$taxcollector = new TaxCollectionVisitor();
-$main_army->accept($taxcollector);
-print $taxcollector->getReport();
-print "TOTAL: ";
-print $taxcollector->getTax().PHP_EOL;
+class TileForces
+{
+    private array $units = [];
+    private int $x;
+    private int $y;
+
+    public function __construct(int $x, int $y, UnitAcquisition $acq)
+    {
+        $this->x = $x;
+        $this->y = $y;
+        $this->units = $acq->getUnits($this->x, $this->y);
+    }
+
+    public function firepower(): int
+    {
+        $power = 0;
+
+        foreach ($this->units as $unit) {
+
+            if (!$unit->isNull())
+                $power += $unit->bombardStrength();
+            else
+                print "null - no action".PHP_EOL;
+        }
+
+        return $power;
+    }
+}
+
+
+class UnitAcquisition
+{
+    public function getUnits(int $x, int $y): array
+    {
+        // 在本地数据中查找x和y并得到一份队伍id的列表
+        // 在数据源中查找出队伍的完整数据
+
+        // 下面直接实例化了几个Unit对象
+        $army = new Army();
+        $army->addUnit(new Archer());
+
+        return [
+            new Cavalry(),
+//            null,
+            new NullUnit(),
+            new LaserCannonUnit(),
+            $army
+        ];
+    }
+}
+
+
+class NullUnit extends Unit
+{
+    public function bombardStrength(): int
+    {
+        return 0;
+    }
+
+    public function getHealth(): int
+    {
+        return 0;
+    }
+
+    public function isNull()
+    {
+        return true;
+    }
+}
+
+$acquirer = new UnitAcquisition();
+$tileforces = new TileForces(4, 2, $acquirer);
+$power = $tileforces->firepower();
+print "power is ".$power.PHP_EOL;
