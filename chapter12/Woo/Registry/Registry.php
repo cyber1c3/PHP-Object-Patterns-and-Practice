@@ -3,7 +3,7 @@
 
 class Registry
 {
-    private static $instance = null;
+    private static ?Registry $instance = null;
     private Request $request;
     private ApplicationHelper $applicationHelper;
     private Conf $conf;
@@ -42,17 +42,11 @@ class Registry
         return $this->applicationHelper;
     }
 
-    /**
-     * @param Conf $conf
-     */
     public function setConf(Conf $conf): void
     {
         $this->conf = $conf;
     }
 
-    /**
-     * @return Conf
-     */
     public function getConf(): Conf
     {
         return $this->conf;

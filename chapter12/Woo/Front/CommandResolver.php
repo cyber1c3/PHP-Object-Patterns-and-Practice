@@ -1,20 +1,23 @@
 <?php
 
+require_once '../Registry/Registry.php';
+
 
 class CommandResolver
 {
-    private static $refcmd = null;
-    private static $defaultcmd = DefaultCommand::class;
+    private static ?ReflectionClass $refcmd = null;
+    private static string $defaultcmd = DefaultCommand::class;
+    private Registry $reg;
 
     public function __construct()
     {
         self::$refcmd = new ReflectionClass(Command::class);
     }
 
-    public function getCommand(Request $request): Command
+    public function getCommand(Request $request): object
     {
-        $reg = Registry::instance();
-        $commands = $reg->getCommands();
+        $this->reg = Registry::instance();
+        $commands = $this->reg->getCommands();
         $path = $request->getPath();
 
         $class = $commands->get($path);
@@ -29,7 +32,7 @@ class CommandResolver
             return new self::$defaultcmd();
         }
 
-        $refclass = new ReflectionClass($class);
+            $refclass = new ReflectionClass($class);
 
         if (!$refclass->isSubclassOf(self::$refcmd)) {
             $request->addFeedback("command '$refclass' is not a Command");

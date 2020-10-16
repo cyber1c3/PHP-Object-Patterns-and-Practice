@@ -5,8 +5,8 @@ require_once '../Registry/Registry.php';
 
 class ApplicationHelper
 {
-    private string $config = __DIR__."/data/woo_options.ini";
-    private $reg;
+    private string $config = __DIR__.'/data/woo_options.ini';
+    private Registry $reg;
 
     public function __construct()
     {
@@ -35,7 +35,7 @@ class ApplicationHelper
         $conf = new Conf($options['config']);
         $this->reg->setConf($conf);
 
-        $commands = new Conf($options['commands']);
+        $commands = new Conf($options['command']);
         $this->reg->setCommands($commands);
     }
 }

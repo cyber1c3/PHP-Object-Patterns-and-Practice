@@ -5,7 +5,7 @@ abstract class Request
 {
     protected $properties;
     protected array $feedback = [];
-    protected string $path = "/";
+    protected string $path = '/';
 
     public function __construct()
     {
@@ -14,7 +14,7 @@ abstract class Request
 
     abstract public function init();
 
-    public function setPath(string $path): void
+    public function setPath(string $path)
     {
         $this->path = $path;
     }
@@ -24,12 +24,14 @@ abstract class Request
         return $this->path;
     }
 
+    /**
+     * @param string $key
+     * @return mixed
+     */
     public function getProperty(string $key)
     {
         if (isset($this->properties[$key]))
             return $this->properties[$key];
-
-        return null;
     }
 
     public function setProperty(string $key, $val)
@@ -37,11 +39,17 @@ abstract class Request
         $this->properties[$key] = $val;
     }
 
+    /**
+     * @param string $msg
+     */
     public function addFeedback(string $msg)
     {
         array_push($this->feedback, $msg);
     }
 
+    /**
+     * @return array
+     */
     public function getFeedback(): array
     {
         return $this->feedback;
@@ -54,6 +62,6 @@ abstract class Request
 
     public function clearFeedback()
     {
-        array_splice($this->feedback, 0);
+        $this->feedback = [];
     }
 }

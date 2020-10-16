@@ -5,9 +5,9 @@ require_once '../Registry/Registry.php';
 
 class Controller
 {
-    private $reg;
+    private Registry $reg;
 
-    private function __construct()
+    public function __construct()
     {
         $this->reg = Registry::instance();
     }
@@ -28,14 +28,10 @@ class Controller
     {
         try {
             $request = $this->reg->getRequest();
+            $resolver = new CommandResolver();
+            $cmd = $resolver->getCommand($request);
+            $cmd->execute($request);
         } catch (Exception $e) {
-            throw new Exception("get request error");
         }
-
-        $controller = new AppController();
-        $cmd = $controller->getCommand($request);
-        $cmd->execute($request);
-        $view = $controller->getView($request);
-        $view->render($request);
     }
 }
